@@ -6,3 +6,7 @@ func main() {
 	MyAccount := bank.NewBankAccount()
 	MyAccount.CreateCard("Arsenii Zhadanenko", "GP99011")
 }
+
+//Create Card num creation,
+//Finish profile setter, it will storage name, and user's data
+// Start thinking about payments
