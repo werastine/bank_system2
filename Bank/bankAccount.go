@@ -3,6 +3,7 @@ package bank
 type BankAccount struct {
 	UserProfile *Profile
 	UserCard    string
+	IsCreated   bool
 }
 
 func NewBankAccount() *BankAccount {
@@ -23,7 +24,8 @@ func newProfile() *Profile {
 	}
 }
 
-func (b BankAccount) CreateCard(name, passport string) {
+func (b *BankAccount) CreateCard(name, passport string) {
 	card := CardCreator(name, passport)
 	b.UserCard = card
+
 }
