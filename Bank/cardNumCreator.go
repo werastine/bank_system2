@@ -1,19 +1,17 @@
 package bank
 
 import (
-	"fmt"
 	"math/rand/v2"
 	"strconv"
 )
 
-func (b *BankAccount) CardCreator(name, passport string) (string, error) {
+func (b *BankAccount) CardCreator(name, passport string) (string, bool) {
 	if !b.IsCreated {
 		result := BackEndCardCreator()
-		//Card creation process where I gonna use mod-10 alg.
 		b.IsCreated = true
-		return result, nil
+		return result, true
 	} else {
-		return "", fmt.Errorf("Action blocked, You cannot create card again")
+		return "", false
 	}
 	// implement mod-10 algorithm the same as I've made in previous one
 
@@ -28,8 +26,24 @@ func RandNumCreation() string {
 
 func Mod10(cardNum string) string {
 	// there will be realisation of mod10 alg
-
-	return "last digit"
+	var mod10 string
+	var num int
+	var cur int
+	for i := len(cardNum) - 1; i >= 0; i-- {
+		cur = int(cardNum[i] - '0')
+		if i%2 != 0 {
+			cur *= 2
+			if cur > 9 {
+				num += cur - 9
+			} else {
+				num += cur
+			}
+			continue
+		}
+		num += cur
+	}
+	mod10 = strconv.Itoa((10 - (num % 10)) % 10)
+	return mod10
 }
 
 func BackEndCardCreator() string {
@@ -41,13 +55,13 @@ func BackEndCardCreator() string {
 	// 16: last digit is mode-10 one, which we can know only after creation of previous 15 digits
 	// --------------------------------------------------------------------------------------------- //
 	var cardNumber string
+	cardNumber += "4"
 	cardNumber += "044"
 
 	for i := 0; len(cardNumber) < 16; i++ {
 		num := RandNumCreation()
 		cardNumber += num
 	}
-
 	cardNumber += Mod10(cardNumber)
 
 	return cardNumber

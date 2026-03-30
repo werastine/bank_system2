@@ -24,8 +24,12 @@ func newProfile() *Profile {
 	}
 }
 
-func (b *BankAccount) CreateCard(name, passport string) {
-	card := CardCreator(name, passport)
+func (b *BankAccount) CreateCard(name, passport string) bool {
+	card, ok := b.CardCreator(name, passport)
+	if !ok {
+		return false
+	}
 	b.UserCard = card
+	return true
 
 }
