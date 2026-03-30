@@ -58,7 +58,7 @@ func BackEndCardCreator() string {
 	cardNumber += "4"
 	cardNumber += "044"
 
-	for i := 0; len(cardNumber) < 16; i++ {
+	for i := 0; len(cardNumber) < 15; i++ {
 		num := RandNumCreation()
 		cardNumber += num
 	}

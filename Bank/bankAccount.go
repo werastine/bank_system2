@@ -1,9 +1,12 @@
 package bank
 
+import "fmt"
+
 type BankAccount struct {
 	UserProfile *Profile
 	UserCard    string
 	IsCreated   bool
+	CardMap     map[*Profile]string
 }
 
 func NewBankAccount() *BankAccount {
@@ -27,6 +30,7 @@ func newProfile() *Profile {
 func (b *BankAccount) CreateCard(name, passport string) bool {
 	card, ok := b.CardCreator(name, passport)
 	if !ok {
+		fmt.Println("Card is already created")
 		return false
 	}
 	b.UserCard = card
