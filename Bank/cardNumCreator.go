@@ -22,10 +22,7 @@ func RandNumCreation() string {
 	return res
 }
 
-// How i suppose to make a map, for a global usage
-
 func Mod10(cardNum string) string {
-	// there will be realisation of mod10 alg
 	var mod10 string
 	var num int
 	var cur int
