@@ -23,15 +23,18 @@ type Profile struct {
 	age            int
 	PassportNumber string
 	UserID         string
+	IDStorage      map[string]struct{}
 }
 
 func newProfile(name string, age int, PassportNumber string) *Profile {
-	return &Profile{
+	p := &Profile{
 		name:           name,
 		age:            age,
 		PassportNumber: PassportNumber,
-		UserID:         IDGenerator(),
+		IDStorage:      make(map[string]struct{}),
 	}
+	p.UserID = p.IDGenerator()
+	return p
 }
 
 func (b *BankAccount) CreateCard() bool { // There i have to change code
@@ -45,11 +48,19 @@ func (b *BankAccount) CreateCard() bool { // There i have to change code
 
 }
 
-func IDGenerator() string {
-	var ID string
-	for i := 0; i < 12; i++ {
-		num := RandNumCreation()
-		ID += num
+func (p *Profile) IDGenerator() string {
+
+	for {
+		var ID string
+		for i := 0; i < 12; i++ {
+			ID += RandNumCreation()
+		}
+		if _, ok := p.IDStorage[ID]; ok {
+			{
+				continue
+			}
+		}
+		p.IDStorage[ID] = struct{}{}
+		return ID
 	}
-	return ID
 }
