@@ -1,12 +1,14 @@
 package bank
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type BankAccount struct {
 	UserProfile *Profile
 	UserCard    string
 	IsCreated   bool
-	CardMap     map[*Profile]string
+	// CardMap     map[]string
 }
 
 func NewBankAccount(name string, age int, PassportNumber string) *BankAccount {
@@ -20,6 +22,7 @@ type Profile struct {
 	name           string
 	age            int
 	PassportNumber string
+	UserID         string
 }
 
 func newProfile(name string, age int, PassportNumber string) *Profile {
@@ -27,6 +30,7 @@ func newProfile(name string, age int, PassportNumber string) *Profile {
 		name:           name,
 		age:            age,
 		PassportNumber: PassportNumber,
+		UserID:         IDGenerator(),
 	}
 }
 
@@ -39,4 +43,13 @@ func (b *BankAccount) CreateCard() bool { // There i have to change code
 	b.UserCard = card
 	return true
 
+}
+
+func IDGenerator() string {
+	var ID string
+	for i := 0; i < 12; i++ {
+		num := RandNumCreation()
+		ID += num
+	}
+	return ID
 }

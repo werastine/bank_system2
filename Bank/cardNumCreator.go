@@ -10,7 +10,6 @@ func (b *BankAccount) CardCreator(name, passport string, age int) (string, bool)
 	if !b.IsCreated {
 		result := BackEndCardCreator()
 		b.IsCreated = true
-		b.UserProfile.name = name
 		return result, true
 	} else {
 		return "", false
