@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	MyAccount := bank.NewBankAccount()
+	MyAccount := bank.NewBankAccount("Arsenii Zhadanenko", 17, "GP99011")
 	MyAccount.CreateCard("Arsenii Zhadanenko", "GP99011")
 	fmt.Println(MyAccount.UserCard)
 	MyAccount.CreateCard("Arsenii Zhadanenko", "GP99011")

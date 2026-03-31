@@ -5,24 +5,25 @@ import (
 	"strconv"
 )
 
-func (b *BankAccount) CardCreator(name, passport string) (string, bool) {
+func (b *BankAccount) CardCreator(name, passport string, age int) (string, bool) {
+
 	if !b.IsCreated {
 		result := BackEndCardCreator()
 		b.IsCreated = true
+		b.UserProfile.name = name
 		return result, true
 	} else {
 		return "", false
 	}
-	// implement mod-10 algorithm the same as I've made in previous one
-
 }
 
 func RandNumCreation() string {
 	randNum := rand.IntN(9)
 	res := strconv.Itoa(randNum)
 	return res
-
 }
+
+// How i suppose to make a map, for a global usage
 
 func Mod10(cardNum string) string {
 	// there will be realisation of mod10 alg

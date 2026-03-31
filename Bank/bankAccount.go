@@ -9,26 +9,29 @@ type BankAccount struct {
 	CardMap     map[*Profile]string
 }
 
-func NewBankAccount() *BankAccount {
+func NewBankAccount(name string, age int, PassportNumber string) *BankAccount {
 	return &BankAccount{
-		UserProfile: newProfile(),
+		UserProfile: newProfile(name, age, PassportNumber),
 		UserCard:    "",
 	}
 }
 
 type Profile struct {
-	balance int
-	// Имя и тд будут братся с card
+	name           string
+	age            int
+	PassportNumber string
 }
 
-func newProfile() *Profile {
+func newProfile(name string, age int, PassportNumber string) *Profile {
 	return &Profile{
-		balance: 100,
+		name:           name,
+		age:            age,
+		PassportNumber: PassportNumber,
 	}
 }
 
-func (b *BankAccount) CreateCard(name, passport string) bool {
-	card, ok := b.CardCreator(name, passport)
+func (b *BankAccount) CreateCard() bool { // There i have to change code
+	card, ok := b.CardCreator(b.UserProfile.name, b.UserProfile.PassportNumber, b.UserProfile.age)
 	if !ok {
 		fmt.Println("Card is already created")
 		return false
