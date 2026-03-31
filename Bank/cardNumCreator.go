@@ -8,7 +8,7 @@ import (
 func (b *BankAccount) CardCreator(name, passport string, age int) (string, bool) {
 
 	if !b.IsCreated {
-		result := BackEndCardCreator()
+		result := b.BackEndCardCreator()
 		b.IsCreated = true
 		return result, true
 	} else {
@@ -17,7 +17,7 @@ func (b *BankAccount) CardCreator(name, passport string, age int) (string, bool)
 }
 
 func RandNumCreation() string {
-	randNum := rand.IntN(9)
+	randNum := rand.IntN(10)
 	res := strconv.Itoa(randNum)
 	return res
 }
@@ -46,7 +46,7 @@ func Mod10(cardNum string) string {
 	return mod10
 }
 
-func BackEndCardCreator() string {
+func (b *BankAccount) BackEndCardCreator() string {
 	// so there i will be full implementation of card num creation
 	// Card number Contain 16 digits:
 	// 1: first digit is visa(4) or mastercard(5), my bank work with visa so: 4
@@ -54,15 +54,30 @@ func BackEndCardCreator() string {
 	// 5-15: The rest(except last digit) is fully random number (0-9)
 	// 16: last digit is mode-10 one, which we can know only after creation of previous 15 digits
 	// --------------------------------------------------------------------------------------------- //
-	var cardNumber string
-	cardNumber += "4"
-	cardNumber += "044"
+	for {
+		var cardNumber string
+		cardNumber += "4"
+		cardNumber += "044"
 
-	for i := 0; len(cardNumber) < 15; i++ {
-		num := RandNumCreation()
-		cardNumber += num
+		for i := 0; len(cardNumber) < 15; i++ {
+			num := RandNumCreation()
+			cardNumber += num
+		}
+		cardNumber += Mod10(cardNumber)
+
+		ok := b.CardNumberDuplicate(cardNumber)
+		if !ok {
+			continue
+		}
+		return cardNumber
 	}
-	cardNumber += Mod10(cardNumber)
+}
 
-	return cardNumber
+func (b *BankAccount) CardNumberDuplicate(cardNum string) bool {
+
+	if _, ok := b.CardStorage[cardNum]; ok {
+		return false
+	}
+	b.CardStorage[cardNum] = struct{}{}
+	return true
 }

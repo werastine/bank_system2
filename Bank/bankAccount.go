@@ -8,13 +8,14 @@ type BankAccount struct {
 	UserProfile *Profile
 	UserCard    string
 	IsCreated   bool
-	// CardMap     map[]string
+	CardStorage map[string]struct{}
 }
 
 func NewBankAccount(name string, age int, PassportNumber string) *BankAccount {
 	return &BankAccount{
 		UserProfile: newProfile(name, age, PassportNumber),
 		UserCard:    "",
+		CardStorage: make(map[string]struct{}),
 	}
 }
 
