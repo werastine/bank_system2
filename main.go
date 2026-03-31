@@ -7,12 +7,14 @@ import (
 
 func main() {
 	MyAccount := bank.NewBankAccount("Arsenii Zhadanenko", 17, "GP99011")
-	MyAccount.CreateCard("Arsenii Zhadanenko", "GP99011")
+	MyAccount.CreateCard()
 	fmt.Println(MyAccount.UserCard)
-	MyAccount.CreateCard("Arsenii Zhadanenko", "GP99011")
+	fmt.Println(MyAccount.UserProfile.UserID)
+	MyAccount.CreateCard()
 
 }
 
-//Create duplicate detector, map will contain user id and card number
 //Finish profile setter, it will storage name, and user's data
 // Start thinking about payments
+
+//Move id storage to bank account, cause now id storage is in profile data, что не корректно
