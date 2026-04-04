@@ -2,17 +2,21 @@ package main
 
 import (
 	"fmt"
-	bank "go_coding/bank_system2/Bank"
+	bankpkg "go_coding/bank_system2/Bank"
 )
 
 func main() {
-	MyAccount := bank.NewBankAccount("Arsenii Zhadanenko", 17, "GP99011")
+	bank := bankpkg.NewBank()
+	MyAccount := bankpkg.NewBankAccount(bank, "Arsenii Zhadanenko", 17, "GP99011")
 	MyAccount.CreateCard()
 	fmt.Println(MyAccount.UserCard)
 	fmt.Println(MyAccount.UserProfile.UserID)
 	MyAccount.CreateCard()
 
 }
+
+// Del cards & id's storage from bank accaunt and implement them into Bank struct
+// so additional task is to create bank structure and prepare code
 
 //Finish profile setter, it will storage name, and user's data
 // Start thinking about payments
