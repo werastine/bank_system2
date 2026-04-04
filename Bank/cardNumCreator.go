@@ -70,11 +70,11 @@ func (b *BankAccount) BackEndCardCreator() string {
 	}
 }
 
-func (b *BankAccount) CardNumberDuplicate(cardNum string) bool {
+func (acc *BankAccount) CardNumberDuplicate(cardNum string) bool {
 
-	if _, ok := b.CardStorage[cardNum]; ok {
+	if _, ok := acc.Bank.CardStorage[cardNum]; ok {
 		return false
 	}
-	b.CardStorage[cardNum] = struct{}{}
+	acc.Bank.CardStorage[cardNum] = struct{}{}
 	return true
 }

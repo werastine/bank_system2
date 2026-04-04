@@ -8,18 +8,16 @@ type BankAccount struct {
 	UserProfile *Profile
 	UserCard    string
 	IsCreated   bool
-	CardStorage map[string]struct{}
-	IDStorage   map[string]struct{}
 	UserID      string
+	Bank        *Bank
 }
 
-func NewBankAccount(name string, age int, PassportNumber string) *BankAccount {
+func NewBankAccount(bank *Bank, name string, age int, PassportNumber string) *BankAccount {
 	acc := &BankAccount{
-		UserCard:    "",
-		CardStorage: make(map[string]struct{}),
-		IDStorage:   make(map[string]struct{}),
+		Bank: bank,
 	}
-	acc.UserProfile = newProfile(name, age, PassportNumber, acc.IDStorage)
+
+	acc.UserProfile = newProfile(name, age, PassportNumber, bank.IDStorage)
 	return acc
 }
 
