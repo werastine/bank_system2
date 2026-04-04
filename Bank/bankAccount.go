@@ -10,15 +10,17 @@ type BankAccount struct {
 	IsCreated   bool
 	CardStorage map[string]struct{}
 	IDStorage   map[string]struct{}
+	UserID      string
 }
 
 func NewBankAccount(name string, age int, PassportNumber string) *BankAccount {
-	return &BankAccount{
-		UserProfile: newProfile(name, age, PassportNumber),
+	acc := &BankAccount{
 		UserCard:    "",
 		CardStorage: make(map[string]struct{}),
 		IDStorage:   make(map[string]struct{}),
 	}
+	acc.UserProfile = newProfile(name, age, PassportNumber, acc.IDStorage)
+	return acc
 }
 
 type Profile struct {
@@ -28,11 +30,12 @@ type Profile struct {
 	UserID         string
 }
 
-func newProfile(name string, age int, PassportNumber string) *Profile {
+func newProfile(name string, age int, PassportNumber string, IDstorage map[string]struct{}) *Profile {
 	return &Profile{
 		name:           name,
 		age:            age,
 		PassportNumber: PassportNumber,
+		UserID:         IDGenerator(IDstorage),
 	}
 }
 
@@ -47,19 +50,19 @@ func (b *BankAccount) CreateCard() bool { // There i have to change code
 
 }
 
-func (b *BankAccount) IDGenerator() string {
+func IDGenerator(storage map[string]struct{}) string {
 
 	for {
 		var ID string
 		for i := 0; i < 12; i++ {
 			ID += RandNumCreation()
 		}
-		if _, ok := b.IDStorage[ID]; ok {
+		if _, ok := storage[ID]; ok {
 			{
 				continue
 			}
 		}
-		b.IDStorage[ID] = struct{}{}
+		storage[ID] = struct{}{}
 		return ID
 	}
 }
